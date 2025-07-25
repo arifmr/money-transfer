@@ -3,6 +3,7 @@ HOW TO RUN THIS PROJECT
 Step 1. Run CLI `docker-compose up -d`
 
 Step 2. Execute all of queries below to prepare the database
+
 CREATE TABLE merchants (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
