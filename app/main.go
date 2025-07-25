@@ -40,7 +40,6 @@ func mainWithoutArg() {
 
 	ctx := context.Background()
 
-	//pgsql selling out service
 	moneyTransferPgsql, err := sqldb.InitPgSql("postgres", os.Getenv("PG_HOST"), os.Getenv("PG_PORT"), os.Getenv("PG_USERNAME"), os.Getenv("PG_PASSWORD"), os.Getenv("PG_DATABASE"), os.Getenv("PG_SCHEMA"))
 	if err != nil {
 		errStr := fmt.Sprintf("Error pgsql selling out service connection %s", err.Error())
@@ -80,7 +79,6 @@ func consumers() {
 
 	ctx := context.Background()
 
-	//pgsql selling out service
 	moneyTransferPgsql, err := sqldb.InitPgSql("postgres", os.Getenv("PG_HOST"), os.Getenv("PG_PORT"), os.Getenv("PG_USERNAME"), os.Getenv("PG_PASSWORD"), os.Getenv("PG_DATABASE"), os.Getenv("PG_SCHEMA"))
 	if err != nil {
 		errStr := fmt.Sprintf("Error pgsql selling out service connection %s", err.Error())

@@ -25,8 +25,6 @@ type transferConsumer struct {
 	sqlDBMap           map[string]sqldb.SqlInterface
 	kafkaClient        kafkautils.KafkaClientInterface
 	transactionUseCase usecases.TransactionUseCaseInterface
-	// merchantRepository    repositories.MerchantRepositoryInterface
-	// transactionRepository repositories.TransactionRepositoryInterface
 }
 
 func InitTransferConsumerHandler(
@@ -34,16 +32,12 @@ func InitTransferConsumerHandler(
 	sqlDBMap map[string]sqldb.SqlInterface,
 	kafkaClient kafkautils.KafkaClientInterface,
 	transactionUseCase usecases.TransactionUseCaseInterface,
-	// merchantRepository repositories.MerchantRepositoryInterface,
-	// transactionRepository repositories.TransactionRepositoryInterface,
 ) TransferConsumerInterface {
 	return &transferConsumer{
 		ctx:                ctx,
 		sqlDBMap:           sqlDBMap,
 		kafkaClient:        kafkaClient,
 		transactionUseCase: transactionUseCase,
-		// merchantRepository:    merchantRepository,
-		// transactionRepository: transactionRepository,
 	}
 }
 
