@@ -1,0 +1,16 @@
+package constants
+
+const (
+	DB_MONEY_TRANSFER = "db_money_transfer"
+
+	TRANSFER_CONSUMER    = "transfer-consumer"
+	TRANSFER_KAFKA_TOPIC = "transfer"
+	TRANSFER_KAFKA_GROUP = "transaction"
+
+	TRANSACTION_STATUS_PENDING = "PENDING"
+	TRANSACTION_STATUS_SUCCESS = "SUCCESS"
+	TRANSACTION_STATUS_FAILED  = "FAILED"
+
+	TRANSFER_OPERATOR = "-"
+	REFUND_OPERATOR   = "+"
+)

@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis:6
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: money_transfer_service
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093,PLAINTEXT_INTERNAL://localhost:19092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,PLAINTEXT_INTERNAL://0.0.0.0:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_INTERNAL: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9093:9093"
+    depends_on:
+      - zookeeper
+
+  # api:
+  #   build:
+  #     context: .
+  #   container_name: api_service
+  #   environment:
+  #     MAIN_PORT: 8001
+  #     PG_HOST: postgres
+  #     PG_PORT: 5432
+  #     PG_USERNAME: money_transfer_service
+  #     PG_PASSWORD: password
+  #     PG_DATABASE: postgres
+  #     KAFKA_HOSTS: kafka:9093
+  #   ports:
+  #     - "8001:8001"
+  #   command: ["./main", "main"]
+  #   depends_on:
+  #     - postgres
+  #     - kafka
+
+  # consumer:
+  #   build:
+  #     context: .
+  #   container_name: consumer_service
+  #   environment:
+  #     PG_HOST: postgres
+  #     PG_PORT: 5432
+  #     PG_USERNAME: money_transfer_service
+  #     PG_PASSWORD: password
+  #     PG_DATABASE: postgres
+  #     KAFKA_HOSTS: kafka:9093
+  #   command: ["./main", "consumer"]
+  #   depends_on:
+  #     - postgres
+  #     - kafka
+
+volumes:
+  pg_data:
